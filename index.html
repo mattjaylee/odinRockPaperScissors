@@ -7,11 +7,22 @@
     <body>
         <script>
             const choices = ['Rock', 'Paper', 'Scissors'];
+            function playerSelect() {
+                let playerSelection = prompt('Please type Rock, Paper, or Scissor')
+                //parses input and returns it neatly with first letter capitalized and the rest lower case
+                let parsedPlayerSelection = playerSelection.charAt(0).toUpperCase() + playerSelection.toLowerCase().slice(1);
+                if (choices.includes(parsedPlayerSelection)) {
+                    return parsedPlayerSelection;
+                }
+                else {
+                    playerSelect();
+                }
+            }
+            //randomly chooses a number 0 - 2 and calls the choices array[random number] to decide the computer's selection
             function computerPlay() {
                 let computerChoice = choices[Math.floor(Math.random() * choices.length)];
                 return computerChoice;
             }
-
 
 
 
