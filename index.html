@@ -6,7 +6,11 @@
     </head>
     <body>
         <script>
-
+            const choices = ['Rock', 'Paper', 'Scissors'];
+            function computerPlay() {
+                let computerChoice = choices[Math.floor(Math.random() * choices.length)];
+                return computerChoice;
+            }
 
 
 
