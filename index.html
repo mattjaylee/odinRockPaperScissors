@@ -6,7 +6,13 @@
     </head>
     <body>
         <script>
+
             const choices = ['Rock', 'Paper', 'Scissors'];
+            let playerScore = 0;
+            let computerScore = 0;
+
+
+
             function playerSelect() {
                 let playerSelection = prompt('Please type Rock, Paper, or Scissor')
                 //parses input and returns it neatly with first letter capitalized and the rest lower case
@@ -24,7 +30,68 @@
                 return computerChoice;
             }
 
+            //decides winner of game based on inputs and increments winner's score
+            function gameLogic(computerChoice, playerChoice) {
+                if (computerChoice == playerChoice) {
+                    return `Computer picked ${computerChoice}. It's a tie!`;
+                }
+                else if (playerChoice == 'Rock') {
+                    if (computerChoice == 'Scissors') {
+                        playerScore ++;
+                        return `Computer picked ${computerChoice}. You win! ${playerChoice} beats ${computerChoice}`;
+                    }
+                    else {
+                        computerScore ++;
+                        return `Computer picked ${computerChoice}. You lose! ${computerChoice} beats ${playerChoice}`;
+                    }
+                }
+                else if (playerChoice == 'Paper') {
+                    if (computerChoice == 'Rock') {
+                        playerScore ++;
+                        return `Computer picked ${computerChoice}. You win! ${playerChoice} beats ${computerChoice}`;
+                    }
+                    else {
+                        computerScore ++;
+                        return `Computer picked ${computerChoice}. You lose! ${computerChoice} beats ${playerChoice}`;
+                    }
+                }
+                else if (computerChoice == 'Paper') {
+                    playerScore ++;
+                    return `Computer picked ${computerChoice}. You win! ${playerChoice} beats ${computerChoice}`;
+                }
+                else {
+                    computerScore ++;
+                    return `Computer picked ${computerChoice}. You lose! ${computerChoice} beats ${playerChoice}`;
+                }
+            }
+            
+            //calls a single game of rock, paper, scissors
+            function playRound() {
+                let playerSelection = playerSelect();
+                let computerSelection = computerPlay();
+                return gameLogic(computerSelection, playerSelection);
+            }
 
+            //calls 5 rounds of game and logs scores. once 5 rounds are done it declares a winner
+            function game() {
+                resetScore();
+                for (let i = 0; i < 5; i++) {
+                    let currentRound = playRound();
+                    console.log(currentRound);
+                    console.log(`Score is Player- ${playerScore} and Computer- ${computerScore}`);
+                }
+                if (playerScore > computerScore) {
+                    return `Player wins ${playerScore} to ${computerScore}!`;
+                }
+                else {
+                    return `Computer wins ${computerScore} to ${playerScore}!`;
+                }
+            }
+
+            function resetScore() {
+                playerScore = 0;
+                computerScore = 0;
+            }
 
         </script>
     </body>
