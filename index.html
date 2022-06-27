@@ -5,25 +5,37 @@
         <title>Rock Paper Scissors</title>
     </head>
     <body>
+        <div class="results">
+            <div class="winnerText">Waiting on the first round...</div>
+            <div class="score">Human: 0 Computer: 0</div>
+        </div>
+        <div class="button-container">
+            <button type="button" class="rock">Rock</button>
+            <button type="button" class="paper">Paper</button>
+            <button type="button" class="scissors">Scissors</button>
+        </div>
         <script>
 
             const choices = ['Rock', 'Paper', 'Scissors'];
             let playerScore = 0;
             let computerScore = 0;
 
+            const winnerText = document.querySelector('.winnerText');
+            const scoreText = document.querySelector('.score');
 
-
-            function playerSelect() {
-                let playerSelection = prompt('Please type Rock, Paper, or Scissor')
-                //parses input and returns it neatly with first letter capitalized and the rest lower case
-                let parsedPlayerSelection = playerSelection.charAt(0).toUpperCase() + playerSelection.toLowerCase().slice(1);
-                if (choices.includes(parsedPlayerSelection)) {
-                    return parsedPlayerSelection;
-                }
-                else {
-                    playerSelect();
-                }
+            let buttonContainer = document.querySelector('.button-container');
+            let buttonNodes = buttonContainer.childNodes;
+            for (let i = 0; i < buttonNodes.length; i++) {
+                buttonNodes[i].addEventListener('click', playRound);
             }
+
+            function playRound() {
+                let playerSelection = this.innerText;
+                let computerSelection = computerPlay();
+                gameLogic(computerSelection, playerSelection);
+                keepScore(computerSelection);
+            }
+
             //randomly chooses a number 0 - 2 and calls the choices array[random number] to decide the computer's selection
             function computerPlay() {
                 let computerChoice = choices[Math.floor(Math.random() * choices.length)];
@@ -33,58 +45,53 @@
             //decides winner of game based on inputs and increments winner's score
             function gameLogic(computerChoice, playerChoice) {
                 if (computerChoice == playerChoice) {
-                    return `Computer picked ${computerChoice}. It's a tie!`;
+                    winnerText.innerText = `Computer picked ${computerChoice}. It's a tie!`;
                 }
                 else if (playerChoice == 'Rock') {
                     if (computerChoice == 'Scissors') {
                         playerScore ++;
-                        return `Computer picked ${computerChoice}. You win! ${playerChoice} beats ${computerChoice}`;
+                        winnerText.innerText = `Computer picked ${computerChoice}. You win! ${playerChoice} beats ${computerChoice}`;
                     }
                     else {
                         computerScore ++;
-                        return `Computer picked ${computerChoice}. You lose! ${computerChoice} beats ${playerChoice}`;
+                        winnerText.innerText = `Computer picked ${computerChoice}. You lose! ${computerChoice} beats ${playerChoice}`;
                     }
                 }
                 else if (playerChoice == 'Paper') {
                     if (computerChoice == 'Rock') {
                         playerScore ++;
-                        return `Computer picked ${computerChoice}. You win! ${playerChoice} beats ${computerChoice}`;
+                        winnerText.innerText = `Computer picked ${computerChoice}. You win! ${playerChoice} beats ${computerChoice}`;
                     }
                     else {
                         computerScore ++;
-                        return `Computer picked ${computerChoice}. You lose! ${computerChoice} beats ${playerChoice}`;
+                        winnerText.innerText = `Computer picked ${computerChoice}. You lose! ${computerChoice} beats ${playerChoice}`;
                     }
                 }
                 else if (computerChoice == 'Paper') {
                     playerScore ++;
-                    return `Computer picked ${computerChoice}. You win! ${playerChoice} beats ${computerChoice}`;
+                    winnerText.innerText = `Computer picked ${computerChoice}. You win! ${playerChoice} beats ${computerChoice}`;
                 }
                 else {
                     computerScore ++;
-                    return `Computer picked ${computerChoice}. You lose! ${computerChoice} beats ${playerChoice}`;
+                    winnerText.innerText = `Computer picked ${computerChoice}. You lose! ${computerChoice} beats ${playerChoice}`;
                 }
-            }
-            
-            //calls a single game of rock, paper, scissors
-            function playRound() {
-                let playerSelection = playerSelect();
-                let computerSelection = computerPlay();
-                return gameLogic(computerSelection, playerSelection);
             }
 
-            //calls 5 rounds of game and logs scores. once 5 rounds are done it declares a winner
-            function game() {
-                resetScore();
-                for (let i = 0; i < 5; i++) {
-                    let currentRound = playRound();
-                    console.log(currentRound);
-                    console.log(`Score is Player- ${playerScore} and Computer- ${computerScore}`);
+            function keepScore (finalComputerSelection) {
+                if (playerScore == 5) {
+                    scoreText.innerText = `Human: ${playerScore} Computer: ${computerScore}`;
+                    winnerText.innerText = `Computer picked ${finalComputerSelection}. You win the first to 5!`
+                    resetScore();
+                    return
                 }
-                if (playerScore > computerScore) {
-                    return `Player wins ${playerScore} to ${computerScore}!`;
+                else if (computerScore == 5) {
+                    scoreText.innerText = `Human: ${playerScore} Computer: ${computerScore}`;
+                    winnerText.innerText = `Computer picked ${finalComputerSelection}. You lose the first to 5!`
+                    resetScore();
+                    return
                 }
                 else {
-                    return `Computer wins ${computerScore} to ${playerScore}!`;
+                    scoreText.innerText = `Human: ${playerScore} Computer: ${computerScore}`;
                 }
             }
 
