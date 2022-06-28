@@ -1,0 +1,45 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    margin: 0;
+    background-color: rgb(41, 137, 255);
+}
+
+html {
+    height: 100%;
+}
+
+p {
+    font-size: 24px;
+}
+
+* {
+    font-family: 'Roboto', 'Helvetica', sans-serif;
+    color: #EAF3FF;
+}
+
+h1 {
+    margin: 100px;
+}
+
+.results {
+    font-size: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.button-container {
+    font-size: 24px; 
+}
+
+button {
+    font-size: 24px;
+    background-color: #EBEBD3;
+    color: #5A5353;
+    border-radius: 8px;
+    border: none;
+    padding: 8px;
+}
